@@ -66,67 +66,63 @@
     <section class="lead-form" id="form">
       <h2>{{ content.form.title }}</h2>
 
-      {% if form_state and form_state.success %}
-      <div class="lead-form__success" role="status">
+      <div class="lead-form__success" role="status" {% if not (form_state and form_state.success) %}hidden{% endif %}>
         <p class="lead-form__success-title">{{ content.form.success_title }}</p>
         <p>{{ content.form.success_body }}</p>
       </div>
-      {% else %}
-      <form method="post" action="/api/lead" novalidate>
+      <form method="post" action="/api/lead" novalidate {% if form_state and form_state.success %}hidden{% endif %}>
         <input type="hidden" name="rendered_at" value="{{ form_rendered_at }}">
         <div class="field field--honeypot" aria-hidden="true">
           <label for="hp">Компания (не заполнять)</label>
           <input type="text" id="hp" name="hp" tabindex="-1" autocomplete="off">
         </div>
 
-        <div class="field{% if form_state and form_state.errors.name %} field--error{% endif %}">
+        <div class="field{% if form_state and form_state.errors.name %} field--error{% endif %}" data-field="name">
           <label for="name">{{ content.form.name_label }}</label>
           <input type="text" id="name" name="name" required minlength="2" maxlength="60"
                  autocomplete="name"
                  value="{{ form_state.values.name if form_state else '' }}">
-          {% if form_state and form_state.errors.name %}
-          <p class="field__error">{{ form_state.errors.name }}</p>
-          {% endif %}
+          <p class="field__error" {% if not (form_state and form_state.errors.name) %}hidden{% endif %}>{{ form_state.errors.name if form_state and form_state.errors.name }}</p>
         </div>
 
-        <div class="field{% if form_state and form_state.errors.phone %} field--error{% endif %}">
+        <div class="field{% if form_state and form_state.errors.phone %} field--error{% endif %}" data-field="phone">
           <label for="phone">{{ content.form.phone_label }}</label>
           <input type="tel" id="phone" name="phone" required
                  inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"
                  value="{{ form_state.values.phone if form_state else '' }}">
-          {% if form_state and form_state.errors.phone %}
-          <p class="field__error">{{ form_state.errors.phone }}</p>
-          {% endif %}
+          <p class="field__error" {% if not (form_state and form_state.errors.phone) %}hidden{% endif %}>{{ form_state.errors.phone if form_state and form_state.errors.phone }}</p>
         </div>
 
-        <div class="field{% if form_state and form_state.errors.company %} field--error{% endif %}">
+        <div class="field{% if form_state and form_state.errors.company %} field--error{% endif %}" data-field="company">
           <label for="company">{{ content.form.company_label }}</label>
           <input type="text" id="company" name="company" required minlength="2" maxlength="120"
                  autocomplete="organization"
                  value="{{ form_state.values.company if form_state else '' }}">
-          {% if form_state and form_state.errors.company %}
-          <p class="field__error">{{ form_state.errors.company }}</p>
-          {% endif %}
+          <p class="field__error" {% if not (form_state and form_state.errors.company) %}hidden{% endif %}>{{ form_state.errors.company if form_state and form_state.errors.company }}</p>
         </div>
 
-        <div class="field field--consent{% if form_state and form_state.errors.consent %} field--error{% endif %}">
+        <div class="field field--consent{% if form_state and form_state.errors.consent %} field--error{% endif %}" data-field="consent">
           <label>
             <input type="checkbox" id="consent" name="consent" value="true" required>
             {{ content.form.consent_label_prefix }}<a href="/privacy">{{ content.form.consent_label_link }}</a>{{ content.form.consent_label_suffix }}
           </label>
-          {% if form_state and form_state.errors.consent %}
-          <p class="field__error">{{ form_state.errors.consent }}</p>
-          {% endif %}
+          <p class="field__error" {% if not (form_state and form_state.errors.consent) %}hidden{% endif %}>{{ form_state.errors.consent if form_state and form_state.errors.consent }}</p>
         </div>
 
-        {% if form_state and form_state.errors.server %}
-        <p class="field__error field__error--server">{{ form_state.errors.server }}</p>
-        {% endif %}
+        <p class="field__error field__error--server" data-field="server" {% if not (form_state and form_state.errors.server) %}hidden{% endif %}>{{ form_state.errors.server if form_state and form_state.errors.server }}</p>
 
         <button type="submit">{{ content.form.submit_label }}</button>
         <p class="note">{{ content.form.note }}</p>
       </form>
-      {% endif %}
+      <script id="form-i18n" type="application/json">
+        {
+          "name": {{ content.form.error_name | tojson }},
+          "phone": {{ content.form.error_phone | tojson }},
+          "company": {{ content.form.error_company | tojson }},
+          "consent": {{ content.form.error_consent | tojson }},
+          "server": {{ content.form.error_generic.format(phone=content.meta.phone_display) | tojson }}
+        }
+      </script>
     </section>
   </main>
 
