@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Политика обработки персональных данных — {{ content.meta.site_name }}</title>
-  <link rel="stylesheet" href="/static/css/landing.css">
+  <title>Политика обработки персональных данных — Agropipeline</title>
+  <link rel="stylesheet" href="static/css/landing.css">
 </head>
 <body>
-  {% if preview_mode %}
+  
   <p class="preview-banner">Статическое превью для просмотра дизайна. <a href="https://github.com/rngoblin/agropipe-landing">Исходный код на GitHub</a></p>
-  {% endif %}
+  
   <header class="site-header">
-    <a class="site-header__name" href="/">{{ content.header.site_name }}</a>
-    <a class="site-header__phone" href="tel:{{ content.meta.phone_href }}">{{ content.meta.phone_display }}</a>
+    <a class="site-header__name" href="index.html">Agropipeline</a>
+    <a class="site-header__phone" href="tel:+70000000000">+7 000 000-00-00</a>
   </header>
 
   <main>
@@ -20,7 +20,7 @@
       <h1>Политика обработки персональных данных</h1>
       <p>
         Текст-заглушка. Заменить перед публикацией на согласованный с юристом
-        текст политики обработки персональных данных {{ content.meta.executor_name }}.
+        текст политики обработки персональных данных ООО «ЕвроАгроКемикалс».
       </p>
       <p>
         Форма на странице agropipeline.ru собирает имя, телефон и название
@@ -33,7 +33,7 @@
   </main>
 
   <footer class="site-footer">
-    <p>{{ content.meta.executor_name }} · ИНН {{ content.meta.executor_inn }} · {{ content.meta.phone_display }} · {{ content.meta.email }}</p>
+    <p>ООО «ЕвроАгроКемикалс» · ИНН 0000000000 · +7 000 000-00-00 · info@agropipeline.ru</p>
   </footer>
 </body>
 </html>

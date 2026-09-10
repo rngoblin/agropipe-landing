@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="/static/css/landing.css">
 </head>
 <body>
+  {% if preview_mode %}
+  <p class="preview-banner">Статическое превью для просмотра дизайна — форма не отправляется, бэкенда нет. <a href="https://github.com/rngoblin/agropipe-landing">Исходный код на GitHub</a></p>
+  {% endif %}
   <header class="site-header">
     <span class="site-header__name">{{ content.header.site_name }}</span>
     <a class="site-header__phone" href="tel:{{ content.meta.phone_href }}">{{ content.meta.phone_display }}</a>
