@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Политика обработки персональных данных — {{ content.meta.site_name }}</title>
+  <link rel="stylesheet" href="/static/css/landing.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__name" href="/">{{ content.header.site_name }}</a>
+    <a class="site-header__phone" href="tel:{{ content.meta.phone_href }}">{{ content.meta.phone_display }}</a>
+  </header>
+
+  <main>
+    <section class="policy">
+      <h1>Политика обработки персональных данных</h1>
+      <p>
+        Текст-заглушка. Заменить перед публикацией на согласованный с юристом
+        текст политики обработки персональных данных {{ content.meta.executor_name }}.
+      </p>
+      <p>
+        Форма на странице agropipeline.ru собирает имя, телефон и название
+        компании для обратного звонка менеджера. Согласие, отмеченное в форме,
+        покрывает только эту обработку контактных данных и не заменяет
+        отдельное согласие на обработку персональных данных, подписываемое
+        перед первым кейсом.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>{{ content.meta.executor_name }} · ИНН {{ content.meta.executor_inn }} · {{ content.meta.phone_display }} · {{ content.meta.email }}</p>
+  </footer>
+</body>
+</html>

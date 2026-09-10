@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ content.meta.site_name }} — агрономическое заключение за час</title>
+  <meta name="description" content="{{ content.hero.title }}">
+  <link rel="stylesheet" href="/static/css/landing.css">
+</head>
+<body>
+  <header class="site-header">
+    <span class="site-header__name">{{ content.header.site_name }}</span>
+    <a class="site-header__phone" href="tel:{{ content.meta.phone_href }}">{{ content.meta.phone_display }}</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>{{ content.hero.title }}</h1>
+      <p>{{ content.hero.body }}</p>
+      <a class="button" href="#form">{{ content.hero.cta_label }}</a>
+      <p class="note">{{ content.hero.note }}</p>
+    </section>
+
+    <section class="steps">
+      <h2>{{ content.steps_title }}</h2>
+      <ol>
+        {% for step in content.steps %}
+        <li>
+          <h3><span class="steps__number">{{ step.number }}</span> {{ step.title }}</h3>
+          <p>{{ step.body }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="report-sample">
+      <h2>{{ content.report_sample.title }}</h2>
+      <figure class="report-sample__frame">
+        <picture>
+          <source srcset="/static/img/{{ content.report_sample.image_webp }}" type="image/webp">
+          <img src="/static/img/{{ content.report_sample.image_png }}"
+               alt="{{ content.report_sample.image_alt }}"
+               width="1320" height="1710" loading="lazy">
+        </picture>
+        <figcaption>{{ content.report_sample.caption }}</figcaption>
+      </figure>
+      <p>{{ content.report_sample.intro }}</p>
+    </section>
+
+    <section class="limits">
+      <h2>{{ content.limits.title }}</h2>
+      <ul>
+        {% for item in content.limits.items %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="executor">
+      <h2>{{ content.executor.title }}</h2>
+      {% for line in content.executor.lines %}
+      <p>{{ line.format(inn=content.meta.executor_inn, city=content.meta.executor_city, since=content.meta.executor_since) }}</p>
+      {% endfor %}
+    </section>
+
+    <section class="lead-form" id="form">
+      <h2>{{ content.form.title }}</h2>
+
+      {% if form_state and form_state.success %}
+      <div class="lead-form__success" role="status">
+        <p class="lead-form__success-title">{{ content.form.success_title }}</p>
+        <p>{{ content.form.success_body }}</p>
+      </div>
+      {% else %}
+      <form method="post" action="/api/lead" novalidate>
+        <input type="hidden" name="rendered_at" value="{{ form_rendered_at }}">
+        <div class="field field--honeypot" aria-hidden="true">
+          <label for="hp">Компания (не заполнять)</label>
+          <input type="text" id="hp" name="hp" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="field{% if form_state and form_state.errors.name %} field--error{% endif %}">
+          <label for="name">{{ content.form.name_label }}</label>
+          <input type="text" id="name" name="name" required minlength="2" maxlength="60"
+                 autocomplete="name"
+                 value="{{ form_state.values.name if form_state else '' }}">
+          {% if form_state and form_state.errors.name %}
+          <p class="field__error">{{ form_state.errors.name }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field{% if form_state and form_state.errors.phone %} field--error{% endif %}">
+          <label for="phone">{{ content.form.phone_label }}</label>
+          <input type="tel" id="phone" name="phone" required
+                 inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"
+                 value="{{ form_state.values.phone if form_state else '' }}">
+          {% if form_state and form_state.errors.phone %}
+          <p class="field__error">{{ form_state.errors.phone }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field{% if form_state and form_state.errors.company %} field--error{% endif %}">
+          <label for="company">{{ content.form.company_label }}</label>
+          <input type="text" id="company" name="company" required minlength="2" maxlength="120"
+                 autocomplete="organization"
+                 value="{{ form_state.values.company if form_state else '' }}">
+          {% if form_state and form_state.errors.company %}
+          <p class="field__error">{{ form_state.errors.company }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field field--consent{% if form_state and form_state.errors.consent %} field--error{% endif %}">
+          <label>
+            <input type="checkbox" id="consent" name="consent" value="true" required>
+            {{ content.form.consent_label_prefix }}<a href="/privacy">{{ content.form.consent_label_link }}</a>{{ content.form.consent_label_suffix }}
+          </label>
+          {% if form_state and form_state.errors.consent %}
+          <p class="field__error">{{ form_state.errors.consent }}</p>
+          {% endif %}
+        </div>
+
+        {% if form_state and form_state.errors.server %}
+        <p class="field__error field__error--server">{{ form_state.errors.server }}</p>
+        {% endif %}
+
+        <button type="submit">{{ content.form.submit_label }}</button>
+        <p class="note">{{ content.form.note }}</p>
+      </form>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>{{ content.meta.executor_name }} · ИНН {{ content.meta.executor_inn }} · {{ content.meta.phone_display }} · {{ content.meta.email }} · <a href="/privacy">{{ content.footer.privacy_label }}</a></p>
+  </footer>
+
+  <script src="/static/js/form.js"></script>
+</body>
+</html>
