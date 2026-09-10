@@ -50,7 +50,7 @@
     <section class="limits">
       <h2>{{ content.limits.title }}</h2>
       <ul>
-        {% for item in content.limits.items %}
+        {% for item in content.limits.points %}
         <li>{{ item }}</li>
         {% endfor %}
       </ul>
@@ -81,7 +81,7 @@
           <label for="name">{{ content.form.name_label }}</label>
           <input type="text" id="name" name="name" required minlength="2" maxlength="60"
                  autocomplete="name"
-                 value="{{ form_state.values.name if form_state else '' }}">
+                 value="{{ form_state.submitted.name if form_state else '' }}">
           <p class="field__error" {% if not (form_state and form_state.errors.name) %}hidden{% endif %}>{{ form_state.errors.name if form_state and form_state.errors.name }}</p>
         </div>
 
@@ -89,7 +89,7 @@
           <label for="phone">{{ content.form.phone_label }}</label>
           <input type="tel" id="phone" name="phone" required
                  inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"
-                 value="{{ form_state.values.phone if form_state else '' }}">
+                 value="{{ form_state.submitted.phone if form_state else '' }}">
           <p class="field__error" {% if not (form_state and form_state.errors.phone) %}hidden{% endif %}>{{ form_state.errors.phone if form_state and form_state.errors.phone }}</p>
         </div>
 
@@ -97,14 +97,14 @@
           <label for="company">{{ content.form.company_label }}</label>
           <input type="text" id="company" name="company" required minlength="2" maxlength="120"
                  autocomplete="organization"
-                 value="{{ form_state.values.company if form_state else '' }}">
+                 value="{{ form_state.submitted.company if form_state else '' }}">
           <p class="field__error" {% if not (form_state and form_state.errors.company) %}hidden{% endif %}>{{ form_state.errors.company if form_state and form_state.errors.company }}</p>
         </div>
 
         <div class="field field--consent{% if form_state and form_state.errors.consent %} field--error{% endif %}" data-field="consent">
           <label>
             <input type="checkbox" id="consent" name="consent" value="true" required>
-            {{ content.form.consent_label_prefix }}<a href="/privacy">{{ content.form.consent_label_link }}</a>{{ content.form.consent_label_suffix }}
+            <span>{{ content.form.consent_label_prefix }}<a href="/privacy">{{ content.form.consent_label_link }}</a>{{ content.form.consent_label_suffix }}</span>
           </label>
           <p class="field__error" {% if not (form_state and form_state.errors.consent) %}hidden{% endif %}>{{ form_state.errors.consent if form_state and form_state.errors.consent }}</p>
         </div>

@@ -274,6 +274,12 @@ section p:last-child { margin-bottom: 0; }
   max-width: 68ch;
 }
 
+/* специфичность класса выше [hidden] из UA-стиля — возвращаем display:none явно,
+   иначе form.hidden = true в form.js не скрывает форму визуально */
+.lead-form form[hidden] {
+  display: none;
+}
+
 .lead-form h2 {
   font-size: 28px;
   font-weight: 500;
